@@ -1,45 +1,38 @@
-const API_KEY = "AIzaSyDSNCShbAdpGsVLG-3HBBV-tqe_7tVEvwg"; 
+const API_KEY = "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"; 
 const chatBox = document.getElementById("chat-box");
 
 async function sendMessage() {
     const input = document.getElementById("user-input");
     const message = input.value;
-    
     if (!message) return;
 
-    // 1. Afficher le message de l'utilisateur
     chatBox.innerHTML += `<p><b>Vous:</b> ${message}</p>`;
     input.value = "";
 
-    // 2. Appeler l'API Gemini
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+        // L'URL change pour OpenRouter
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: "POST",
             headers: {
+                "Authorization": `Bearer ${API_KEY}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: message }]
-                }]
+                "model": "google/gemini-pro-1.5-exp-free", // Modèle gratuit
+                "messages": [
+                    {"role": "user", "content": message}
+                ]
             })
         });
 
-        if (!response.ok) {
-            throw new Error('Erreur réseau ou clé API invalide');
-        }
-
         const data = await response.json();
+        const botReply = data.choices[0].message.content;
         
-        // 3. Extraire et afficher la réponse du bot
-        const botReply = data.candidates[0].content.parts[0].text;
         chatBox.innerHTML += `<p><b>Bot:</b> ${botReply}</p>`;
-        
-        // Faire défiler vers le bas
         chatBox.scrollTop = chatBox.scrollHeight;
 
     } catch (error) {
         console.error(error);
-        chatBox.innerHTML += `<p style="color:red">Erreur: Impossible de contacter l'IA. Vérifie ta clé API.</p>`;
+        chatBox.innerHTML += `<p style="color:red">Erreur avec OpenRouter. Vérifie ta clé.</p>`;
     }
 }
