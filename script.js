@@ -1,4 +1,6 @@
-const API_KEY = "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"; 
+const API_KEY = "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
+
+"; 
 const chatBox = document.getElementById("chat-box");
 
 async function sendMessage() {
