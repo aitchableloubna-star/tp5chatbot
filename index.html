@@ -2,16 +2,19 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Mon Chatbot AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Clone - TP5</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="chat-container">
-        <h2>🤖 Assistant Chatbot</h2>
-        <div id="chat-box"></div>
-        <div class="input-area">
-            <input type="text" id="user-input" placeholder="Posez votre question...">
-            <button onclick="sendMessage()">Envoyer</button>
+    <div class="chat-wrapper">
+        <header>
+            <h2>🚀 AI Chat Assistant</h2>
+        </header>
+        <div id="chat-box" class="chat-box"></div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Envoyez un message..." onkeypress="if(event.key === 'Enter') sendMessage()">
+            <button id="send-btn" onclick="sendMessage()">➤</button>
         </div>
     </div>
     <script src="script.js"></script>
